@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import imagen0 from "./images/rey_atanagildo.png";
+import imagen1 from "./images/rey_sisebuto.png";
+import { useRef } from "react";
+import "./App.css";
 
 function App() {
+  const cambio = 23.16;
+  const refCaja = useRef();
+  const incrementar = (e) => {
+    e.target.innerHTML = Number(e.target.innerHTML) + 1;
+    if (e.target.innerHTML >= 10) {
+      e.target.innerHTML = 1;
+    }
+    if (e.target.innerHTML >= 8) {
+      e.target.style.backgroundColor = "red";
+    } else {
+      e.target.style.backgroundColor = "white";
+    }
+  };
+  const convertir = () => {
+    refCaja.current.innerHTML = Number(refCaja.current.innerHTML) * cambio;
+  };
+  const cambiar = (e) => {
+    if (e.target.src.includes("atanagildo")) {
+      e.target.src = imagen1;
+    } else {
+      e.target.src = imagen0;
+    }
+  };
+  const lectura = (e) => {
+    refCaja.current.innerHTML = e.target.value;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div ref={refCaja} className="caja" onClick={incrementar}>
+        1
+      </div>
+      <button onClick={convertir}>Aceptar</button>
+      <div>
+        <img onClick={cambiar} src={imagen0} alt="rey0" />
+      </div>
+      <input onChange={lectura} className="campo" />
+    </>
   );
 }
 
